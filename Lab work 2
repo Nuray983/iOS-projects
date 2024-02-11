@@ -1,0 +1,136 @@
+//Task 1
+//Bank account management
+
+import Foundation
+class BankAccount {
+    let accountNumber: String
+    let accountOwner: String
+    private var balance: Double
+    
+    init(accountNumber: String, accountOwner: String, startingBalance: Double) {
+        self.accountNumber = accountNumber
+        self.accountOwner = accountOwner
+        self.balance = startingBalance
+    }
+    
+    func deposit(amount: Double) {
+        guard amount > 0 else {
+            print("Ошибка: Сумма депозита должна быть больше нуля.")
+            return
+        }
+        balance += amount
+        print("Депозит в размере \(amount) успешно выполнен. Новый баланс: \(balance)")
+    }
+    
+    func withdraw(amount: Double) {
+        guard amount > 0 else {
+            print("Ошибка: Сумма вывода должна быть больше нуля.")
+            return
+        }
+        if balance >= amount {
+            balance -= amount
+            print("Вывод в размере \(amount) успешно выполнен. Новый баланс: \(balance)")
+        } else {
+            print("Ошибка: Недостаточно средств. Сумма вывода превышает текущий баланс.")
+        }
+    }
+    
+    func getBalance() -> Double {
+        return balance
+    }
+    
+    func displayAccountInfo() {
+        print("Информация о счете:")
+        print("Номер счета: \(accountNumber)")
+        print("Владелец счета: \(accountOwner)")
+        print("Текущий баланс: \(balance)")
+    }
+}
+
+// Пример использования:
+let account = BankAccount(accountNumber: "1234567890", accountOwner: "Иванов Иван", startingBalance: 1000.0)
+account.displayAccountInfo()
+
+account.deposit(amount: 500.0)
+account.withdraw(amount: 200.0)
+account.withdraw(amount: 2000.0) // Попытка снять сумму больше, чем на счете
+
+-------------------------------------------------------------------------------------
+
+//Task 2
+//Book library management
+
+import Foundation
+class Book {
+    let title: String
+    let author: String
+    let year: Int
+    let pageCount: Int
+    
+    init(title: String, author: String, year: Int, pageCount: Int) {
+        self.title = title
+        self.author = author
+        self.year = year
+        self.pageCount = pageCount
+    }
+    
+    func displayBookInfo() {
+        print("Book Information:")
+        print("Title: \(title)")
+        print("Author: \(author)")
+        print("Year: \(year)")
+        print("Page Count: \(pageCount)")
+    }
+}
+
+class Library {
+    var books: [Book]
+    
+    init() {
+        self.books = []
+    }
+    
+    func addBook(book: Book) {
+        books.append(book)
+        print("Book '\(book.title)' has been added to the library.")
+    }
+    
+    func removeBook(book: Book) {
+        if let index = books.firstIndex(where: { $0.title == book.title && $0.author == book.author }) {
+            books.remove(at: index)
+            print("Book '\(book.title)' has been removed from the library.")
+        } else {
+            print("Book '\(book.title)' not found in the library.")
+        }
+    }
+    
+    func displayLibraryInfo() {
+        print("Library Information:")
+        if books.isEmpty {
+            print("The library is empty.")
+        } else {
+            for book in books {
+                book.displayBookInfo()
+                print("---------------------------")
+            }
+        }
+    }
+}
+
+// Example usage:
+let book1 = Book(title: "The Great Gatsby", author: "F. Scott Fitzgerald", year: 1925, pageCount: 180)
+let book2 = Book(title: "To Kill a Mockingbird", author: "Harper Lee", year: 1960, pageCount: 281)
+let book3 = Book(title: "1984", author: "George Orwell", year: 1949, pageCount: 328)
+
+let library = Library()
+
+library.addBook(book: book1)
+library.addBook(book: book2)
+library.addBook(book: book3)
+
+library.displayLibraryInfo()
+
+library.removeBook(book: book2)
+
+library.displayLibraryInfo()
+
