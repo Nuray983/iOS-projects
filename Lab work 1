@@ -1,0 +1,175 @@
+// Task 1
+//Calculator using the following functions
+
+import Foundation
+func add(_ num1: Double, _ num2: Double) -> Double {
+    return num1 + num2
+}
+
+
+func subtract(_ num1: Double, _ num2: Double) -> Double {
+    return num1 - num2
+}
+
+
+func multiply(_ num1: Double, _ num2: Double) -> Double {
+    return num1 * num2
+}
+
+
+func divide(_ num1: Double, _ num2: Double) -> Double? {
+    guard num2 != 0 else {
+        return nil // Возвращаем nil в случае деления на ноль
+    }
+    return num1 / num2
+}
+
+
+func power(_ num: Double, _ exponent: Double) -> Double {
+    return pow(num, exponent)
+}
+
+// Функция для выполнения операций в зависимости от введенного оператора
+func performOperation(_ num1: Double, _ num2: Double, _ operatorSymbol: Character) -> Double? {
+    switch operatorSymbol {
+    case "+":
+        return add(num1, num2)
+    case "-":
+        return subtract(num1, num2)
+    case "*":
+        return multiply(num1, num2)
+    case "/":
+        return divide(num1, num2)
+    case "^":
+        return power(num1, num2)
+    default:
+        return nil
+    }
+}
+
+// Функция для получения числа от пользователя
+func getInputNumber() -> Double? {
+    guard let input = readLine(), let number = Double(input) else {
+        print("Ошибка: Введите корректное число.")
+        return nil
+    }
+    return number
+}
+
+// Функция для получения оператора от пользователя
+func getOperator() -> Character? {
+    guard let input = readLine(), input.count == 1, let operatorSymbol = input.first else {
+        print("Ошибка: Введите один из следующих операторов: +, -, *, /, ^.")
+        return nil
+    }
+    return operatorSymbol
+}
+
+// Получаем числа и оператор от пользователя
+print("Введите первое число:")
+guard let number1 = getInputNumber() else { exit(0) }
+print("Введите второе число:")
+guard let number2 = getInputNumber() else { exit(0) }
+print("Введите оператор (+, -, *, /, ^):")
+guard let operatorSymbol = getOperator() else { exit(0) }
+
+// Выполняем операцию и печатаем результат
+if let result = performOperation(number1, number2, operatorSymbol) {
+    print("Результат: \(result)")
+} else {
+    print("Ошибка: Невозможно выполнить операцию.")
+}
+
+--------------------------------------------------------------------
+
+//Task 2
+Processing string data
+
+import Foundation
+// Функция для объединения строк
+func concatenateStrings() {
+    print("Введите первую строку:")
+    guard let str1 = readLine() else {
+        print("Ошибка: Не удалось прочитать ввод.")
+        return
+    }
+    print("Введите вторую строку:")
+    guard let str2 = readLine() else {
+        print("Ошибка: Не удалось прочитать ввод.")
+        return
+    }
+    let concatenatedString = str1 + str2
+    print("Результат объединения строк: \(concatenatedString)")
+}
+
+// Функция для переворачивания строки
+func reverseString() {
+    print("Введите строку для переворачивания:")
+    guard let str = readLine() else {
+        print("Ошибка: Не удалось прочитать ввод.")
+        return
+    }
+    let reversedString = String(str.reversed())
+    print("Перевернутая строка: \(reversedString)")
+}
+
+// Функция для подсчета символов в строке
+func countCharacters() {
+    print("Введите строку для подсчета символов:")
+    guard let str = readLine() else {
+        print("Ошибка: Не удалось прочитать ввод.")
+        return
+    }
+    let characterCount = str.filter { !$0.isWhitespace }.count
+    print("Количество символов в строке (без пробелов): \(characterCount)")
+}
+
+// Функция для поиска подстроки в строке
+func findSubstring() {
+    print("Введите строку:")
+    guard let str = readLine() else {
+        print("Ошибка: Не удалось прочитать ввод.")
+        return
+    }
+    print("Введите подстроку для поиска:")
+    guard let substring = readLine() else {
+        print("Ошибка: Не удалось прочитать ввод.")
+        return
+    }
+    if let range = str.range(of: substring) {
+        print("Первое вхождение подстроки \"\(substring)\" в строке начинается с индекса \(str.distance(from: str.startIndex, to: range.lowerBound)).")
+    } else {
+        print("Подстрока не найдена в строке.")
+    }
+}
+
+// Основная функция для выбора операции
+func chooseOperation() {
+    print("Выберите операцию:")
+    print("1. Объединение строк")
+    print("2. Переворот строки")
+    print("3. Подсчет символов")
+    print("4. Поиск подстроки")
+    print("Введите номер операции:")
+    
+    guard let choice = readLine() else {
+        print("Ошибка: Не удалось прочитать ввод.")
+        return
+    }
+    
+    switch choice {
+    case "1":
+        concatenateStrings()
+    case "2":
+        reverseString()
+    case "3":
+        countCharacters()
+    case "4":
+        findSubstring()
+    default:
+        print("Ошибка: Неверный выбор операции.")
+    }
+}
+
+// Вызов функции для выбора операции
+chooseOperation()
