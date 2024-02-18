@@ -1,0 +1,172 @@
+//Task #1: Student Magazine
+
+struct Student {
+    let firstName: String
+    let lastName: String
+    let averageGrade: Double
+}
+
+struct StudentJournal {
+    var students: [Student] = []
+    
+    // добавления нового студента в журнал
+    mutating func addStudent(firstName: String, lastName: String, averageGrade: Double) {
+        let newStudent = Student(firstName: firstName, lastName: lastName, averageGrade: averageGrade)
+        students.append(newStudent)
+    }
+    
+    // удаления студента из журнала по имени и фамилии
+    mutating func removeStudent(firstName: String, lastName: String) {
+        students.removeAll { $0.firstName == firstName && $0.lastName == lastName }
+    }
+    
+    // отображения информации обо всех учащихся в журнале
+    func displayStudentsInfo() {
+        for student in students {
+            print("Name: \(student.firstName) \(student.lastName), Average Grade: \(student.averageGrade)")
+        }
+    }
+    
+    // определения среднего балла всех учащихся в журнале
+    func averageGradeOfAllStudents() -> Double {
+        let totalGrades = students.reduce(0.0) { $0 + $1.averageGrade }
+        return totalGrades / Double(students.count)
+    }
+    
+    // поиска ученика с самым высоким средним баллом
+    func studentWithHighestAverageGrade() -> Student? {
+        return students.max(by: { $0.averageGrade < $1.averageGrade })
+    }
+    
+    // сортировки студентов в порядке убывания их среднего балла
+    func sortStudentsByAverageGradeDescending() -> [Student] {
+        return students.sorted(by: { $0.averageGrade > $1.averageGrade })
+    }
+}
+
+// Пример использования:
+
+var journal = StudentJournal()
+
+// Добавляем студентов
+journal.addStudent(firstName: "Имя1", lastName: "Фамилия1", averageGrade: 4.5)
+journal.addStudent(firstName: "Имя2", lastName: "Фамилия2", averageGrade: 4.2)
+journal.addStudent(firstName: "Имя3", lastName: "Фамилия3", averageGrade: 4.8)
+
+// Выводим информацию о студентах
+print("All students:")
+journal.displayStudentsInfo()
+
+// Выводим средний балл всех студентов
+print("Average grade of all students: \(journal.averageGradeOfAllStudents())")
+
+// Выводим информацию о студенте с самым высоким баллом
+if let topStudent = journal.studentWithHighestAverageGrade() {
+    print("Student with the highest average grade: \(topStudent.firstName) \(topStudent.lastName), Average Grade: \(topStudent.averageGrade)")
+}
+
+// Выводим студентов в порядке убывания их среднего балла
+print("Students sorted by average grade (descending):")
+let sortedStudents = journal.sortStudentsByAverageGradeDescending()
+for student in sortedStudents {
+    print("Name: \(student.firstName) \(student.lastName), Average Grade: \(student.averageGrade)")
+}
+
+// Удаляем студента по имени и фамилии
+journal.removeStudent(firstName: "Имя1", lastName: "Фамилия1")
+
+// Повторный вывод информации о студентах
+print("All students after removing Имя1 Фамилия1:")
+journal.displayStudentsInfo()
+
+
+//Task #2: Managing tasks on your to-do list
+
+// Структура задачи
+struct Task {
+    let title: String
+    let description: String
+    var isCompleted: Bool
+}
+
+// Список дел
+struct ToDoList {
+    var tasks: [Task] = []
+    
+    // добавления новой задачи в список
+    mutating func addTask(title: String, description: String) {
+        let newTask = Task(title: title, description: description, isCompleted: false)
+        tasks.append(newTask)
+    }
+    
+    // удаления задачи из списка по имени
+    mutating func removeTask(title: String) {
+        tasks.removeAll { $0.title == title }
+    }
+    
+    // изменения статуса выполнения задачи
+    mutating func toggleTaskCompletion(title: String) {
+        if let index = tasks.firstIndex(where: { $0.title == title }) {
+            tasks[index].isCompleted.toggle()
+        }
+    }
+    
+    // отображения информации обо всех задачах в списке
+    func displayAllTasks() {
+        for task in tasks {
+            print("Title: \(task.title), Description: \(task.description), Completed: \(task.isCompleted ? "Yes" : "No")")
+        }
+    }
+    
+    // поиска и отображения всех выполненных задач
+    func displayCompletedTasks() {
+        let completedTasks = tasks.filter { $0.isCompleted }
+        print("Completed Tasks:")
+        for task in completedTasks {
+            print("Title: \(task.title), Description: \(task.description)")
+        }
+    }
+    
+    // поиска и печати всех невыполненных задач
+    func displayIncompleteTasks() {
+        let incompleteTasks = tasks.filter { !$0.isCompleted }
+        print("Incomplete Tasks:")
+        for task in incompleteTasks {
+            print("Title: \(task.title), Description: \(task.description)")
+        }
+    }
+    
+    // очистки списка выполненных задач
+    mutating func clearCompletedTasks() {
+        tasks = tasks.filter { !$0.isCompleted }
+    }
+}
+
+// Пример использования:
+
+var toDoList = ToDoList()
+
+// Добавляем задачи
+toDoList.addTask(title: "Buy groceries", description: "Milk, bread, eggs")
+toDoList.addTask(title: "Finish homework", description: "Math assignment")
+
+// Перечисляем все задачи
+print("All Tasks:")
+toDoList.displayAllTasks()
+
+// Отмечаем одну задачу как выполненную
+toDoList.toggleTaskCompletion(title: "Finish homework")
+
+// Выводим все выполненные задачи
+toDoList.displayCompletedTasks()
+
+// Выводим все невыполненные задачи
+toDoList.displayIncompleteTasks()
+
+// Очищаем список выполненных задач
+toDoList.clearCompletedTasks()
+
+// Повторный вывод всех задач
+print("\nAll Tasks after clearing completed tasks:")
+toDoList.displayAllTasks()
+
