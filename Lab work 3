@@ -80,6 +80,7 @@ print("All students after removing Имя1 Фамилия1:")
 journal.displayStudentsInfo()
 
 
+________________________________________________________________________________
 //Task #2: Managing tasks on your to-do list
 
 // Структура задачи
