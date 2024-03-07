@@ -1,0 +1,41 @@
+//
+//  ViewController.swift
+//  Lab 4
+//
+//  Created by Macbook on 28/2/2024.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+        // Create a button
+        let button = UIButton(type: .system)
+        button.setTitle("Tap me", for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
+        button.center = view.center // Center the button horizontally and vertically
+        
+        // Add the button to the view
+        view.addSubview(button)
+        
+        // Add action to the button
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
+    @objc func buttonTapped() {
+        // Create a label
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        label.text = "Hello World"
+        label.textAlignment = .center
+        label.center = CGPoint(x: view.center.x, y: view.center.y - 50) // Center the label horizontally and position it higher
+        
+        // Add the label to the view
+        view.addSubview(label)
+    }
+}
+
+
